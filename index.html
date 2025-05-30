@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>DREEM | Fashion</title>
+    
+    <!-- روابط Slick CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        header {
+            background-color: #000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .header-bg {
+            background-image: url('http://localhost:8000/i.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.6;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        .brand-logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .brand-slogan {
+            font-style: italic;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+            color: #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #111;
+            padding: 10px 5px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 9px;
+            padding: 5px;
+            font-size: 13px;
+            transition: all 0.7s;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        nav a:hover {
+            color: #ccc;
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+        
+        .search-container input {
+            padding: 8px;
+            width: 70%;
+            margin-right: 5px;
+            border-radius: 0;
+            border: 1px solid #ddd;
+            font-family: Arial;
+            font-size: 14px;
+        }
+        
+        .search-container button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .search-container button:hover {
+            background-color: #333;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            padding: 8px 5px;
+            background-color: #f1f1f1;
+            flex-wrap: wrap;
+            width: 100%;
+            gap: 5px;
+        }
+        
+        .filter-container select {
+            padding: 6px;
+            margin: 2px;
+            border-radius: 0;
+            border: 1px solid #ddd;
+            min-width: 80px;
+            background-color: white;
+            font-family: Arial;
+            font-size: 11px;
+            flex-grow: 1;
+        }
+        
+        .filter-active {
+            background-color: #000 !important;
+            color: white !important;
+        }
+        
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            margin: 2px;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* أنماط الأقسام والسلايدر */
+        .category-section {
+            margin: 20px auto;
+            max-width: 100%;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            width: 100%;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .section-header a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .product-slider {
+            margin: 5px -5px;
+            width: 100%;
+        }
+        
+        .product-card {
+            background-color: white;
+            border: 1px solid #eee;
+            padding: 8px;
+            margin: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            border-radius: 5px;
+            height: 100%;
+            min-width: 120px;
+        }
+        
+        .product-card:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+        
+        .product-card img {
+            max-width: 100%;
+            height: 350px;
+            object-fit: cover;
+            margin-bottom: 8px;
+            transition: opacity 0.3s;
+        }
+        
+        .product-card:hover img {
+            opacity: 0.8;
+        }
+        
+        .product-card h3 {
+            margin: 5px 0;
+            font-weight: normal;
+            font-size: 25px;
+            height: 36px;
+            overflow: hidden;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #000;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        .discount-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 2px;
+            text-decoration: line-through;
+        }
+        
+        .sale-price {
+            color: #000;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .sale-badge {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: #000;
+            color: white;
+            padding: 2px 5px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-radius: 2px;
+        }
+        
+        .product-details {
+            font-size: 20px;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            font-size: 1rem;
+            background: white;
+            margin: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: calc(100% - 20px);
+        }
+
+        @media (min-width: 480px) {
+            nav a {
+                font-size: 12px;
+                margin: 0 8px;
+                padding: 5px 8px;
+            }
+            
+            .filter-container select {
+                font-size: 12px;
+                min-width: 100px;
+            }
+            
+            .reset-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            
+            .product-card {
+                min-width: 140px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .brand-logo {
+                font-size: 3rem;
+            }
+            
+            .brand-slogan {
+                font-size: 1.1rem;
+            }
+            
+            nav a {
+                margin: 0 12px;
+                font-size: 13px;
+            }
+            
+            .search-container input {
+                width: 300px;
+                font-size: 16px;
+                padding: 10px;
+            }
+            
+            .search-container button {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+            
+            .filter-container select {
+                min-width: 120px;
+                font-size: 14px;
+                padding: 8px;
+            }
+            
+            .reset-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .section-header h2 {
+                font-size: 22px;
+            }
+            
+            .section-header a {
+                font-size: 14px;
+            }
+            
+            .product-card {
+                padding: 12px;
+            }
+            
+            .product-card h3 {
+                font-size: 14px;
+            }
+            
+            .price, .sale-price {
+                font-size: 1em;
+            }
+            
+            .discount-price {
+                font-size: 0.9em;
+            }
+            
+            .sale-badge {
+                font-size: 11px;
+            }
+            
+            .product-details {
+                font-size: 11px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .category-section {
+                max-width: 1200px;
+                padding: 20px;
+            }
+            
+            .product-card {
+                min-width: 180px;
+            }
+            
+            .product-card img {
+                height: 150px;
+            }
+            
+            .product-card h3 {
+                font-size: 16px;
+                height: 40px;
+            }
+            
+            .price, .sale-price {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="brand-logo">DREEM</h1>
+            <p class="brand-slogan">للخياطة والملابس الجاهزة الفاخرة</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="men.html">رجالي</a>
+        <a href="women.html">نسائي</a>
+        <a href="kids.html">أطفال</a>
+        <a href="contact.html">اتصل بنا</a>
+    </nav>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="searchProducts()">
+        <button onclick="searchProducts()">بحث</button>
+    </div>
+
+    <div class="filter-container">
+        <select id="ageFilter">
+            <option value="">كل الأعمار</option>
+            <option value="1">1 سنة</option>
+            <option value="2">2 سنوات</option>
+            <option value="3">3 سنوات</option>
+            <option value="4">4 سنوات</option>
+            <option value="5">5 سنوات</option>
+            <option value="6">6 سنوات</option>
+            <option value="7">7 سنوات</option>
+            <option value="8">8 سنوات</option>
+            <option value="9">9 سنوات</option>
+            <option value="10">10 سنوات</option>
+            <option value="11">11 سنة</option>
+            <option value="12">12 سنة</option>
+            <option value="13">13 سنة</option>
+            <option value="14">14 سنة</option>
+            <option value="15">15 سنة</option>
+            <option value="16">16 سنة</option>
+            <option value="17">17 سنة</option>
+            <option value="18">18 سنة</option>
+            <option value="19">19 سنة</option>
+            <option value="20">20 سنة</option>
+            <option value="21">21 سنة</option>
+            <option value="22">22 سنة</option>
+            <option value="23">23 سنة</option>
+            <option value="24">24 سنة</option>
+            <option value="25">25 سنة</option>
+            <option value="26">26 سنة</option>
+            <option value="27">27 سنة</option>
+            <option value="28">28 سنة</option>
+            <option value="29">29 سنة</option>
+            <option value="30">30 سنة</option>
+            <option value="31">31 سنة</option>
+            <option value="32">32 سنة</option>
+            <option value="33">33 سنة</option>
+            <option value="34">34 سنة</option>
+            <option value="35">35 سنة</option>
+            <option value="36">36 سنة</option>
+            <option value="37">37 سنة</option>
+            <option value="38">38 سنة</option>
+            <option value="39">39 سنة</option>
+            <option value="40up">40 فما فوق</option>
+        </select>
+        
+        <select id="colorFilter">
+            <option value="">كل الألوان</option>
+            <option value="أسود">أسود</option>
+            <option value="أبيض">أبيض</option>
+            <option value="أحمر">أحمر</option>
+            <option value="أزرق">أزرق</option>
+            <option value="أصفر">أصفر</option>
+            <option value="أخضر">أخضر</option>
+            <option value="رمادي">رمادي</option>
+            <option value="وردي">وردي</option>
+            <option value="بني">بني</option>
+        </select>
+        
+        <select id="styleFilter">
+            <option value="">كل المقاسات</option>
+            <option value="طويل">طويل</option>
+            <option value="قصير">قصير</option>
+        </select>
+        
+        <select id="categoryFilter">
+            <option value="">كل الفئات</option>
+            <option value="شمزان">شمزان</option>
+            <option value="فلائن">فلائن</option>
+            <option value="بناطيل">بناطيل</option>
+            <option value="أثواب">أثواب</option>
+            <option value="ملابس داخلية">ملابس داخلية</option>
+        </select>
+        
+        <button class="reset-btn" onclick="resetFilters()">إعادة تعيين</button>
+    </div>
+
+    <div id="productsDisplay">
+        <!-- سيتم عرض الأقسام والمنتجات هنا ديناميكياً -->
+    </div>
+
+    <!-- روابط الجافاسكريبت -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    
+    <script>
+        // بيانات المنتجات الكاملة
+        const allProducts = [
+            { 
+                id: 1,
+                name: 'تيشرت رجالي قطني', 
+                price: '3500 ر.ي', 
+                discountPrice: '3000', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 22, 
+                color: 'أسود', 
+                style: 'قصير', 
+                category: 'شمزان',
+                url: 'تيشرت.html' 
+            },
+            { 
+                id: 2,
+                name: 'قميص رجالي رسمي', 
+                price: '4500 ر.ي', 
+                discountPrice: '3800',
+                onSale: false, 
+                img: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 25, 
+                color: 'أبيض', 
+                style: 'طويل', 
+                category: 'شمزان',
+                url: 'قميص.html' 
+            },
+            { 
+                id: 3,
+                name: 'بنطلون جينز', 
+                price: '4500 ر.ي', 
+                discountPrice: '4000 ر.ي', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 30, 
+                color: 'أزرق', 
+                style: 'طويل', 
+                category: 'بناطيل',
+                url: 'جينز.html' 
+            },
+            { 
+                id: 4,
+                name: 'ثوب كم قصير', 
+                price: '5000 ر.ي', 
+                discountPrice: '4500 ر.ي', 
+                onSale: false, 
+                img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 35, 
+                color: 'أبيض', 
+                style: 'طويل', 
+                category: 'أثواب',
+                url: 'ثوب.html' 
+            },
+            { 
+                id: 5,
+                name: 'فلانلة صيفية', 
+                price: '3000 ر.ي', 
+                discountPrice: '2500 ر.ي', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 20, 
+                color: 'أحمر', 
+                style: 'قصير', 
+                category: 'فلائن',
+                url: 'فلانلة.html' 
+            },
+            { 
+                id: 6,
+                name: 'ملابس داخلية قطنية', 
+                price: '3000 ر.ي', 
+                discountPrice: '2500 ر.ي', 
+                onSale: false, 
+                img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 18, 
+                color: 'رمادي', 
+                style: 'قصير', 
+                category: 'ملابس داخلية',
+                url: 'داخلية.html' 
+            },
+            { 
+                id: 7,
+                name: 'شميزة رجالي', 
+                price: '4000 ر.ي', 
+                discountPrice: '3200 ريال يمني', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 20, 
+                color: 'أزرق', 
+                style: 'قصير', 
+                category: 'شمزان',
+                url: 'شميزة-رجالي.html' 
+            },
+            { 
+                id: 8,
+                name: 'ثوب رحالي', 
+                price: '6000 ر.ي', 
+                discountPrice: '5000 ر.ي', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 28, 
+                color: 'أخضر', 
+                style: 'طويل', 
+                category: 'أثواب',
+                url: 'ثوب-نسائي.html' 
+            },
+            { 
+                id: 9,
+                name: 'فلانلة رجالي', 
+                price: '3500 ر.ي', 
+                discountPrice: '2500 ر.ي', 
+                onSale: true, 
+                img: 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 25, 
+                color: 'أبيض', 
+                style: 'قصير', 
+                category: 'فلائن',
+                url: 'فلانلة-رجالي.html' 
+            },
+            { 
+                id: 10,
+                name: 'جينز ضيق', 
+                price: '4500 ر.ي', 
+                discountPrice: '4000 ر.ي', 
+                onSale: false, 
+                img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 
+                age: 22, 
+                color: 'أسود', 
+                style: 'طويل', 
+                category: 'بناطيل',
+                url: 'جينز-ضيق.html' 
+            }
+        ];
+
+        // تصنيف المنتجات حسب الفئة
+        const categorizedProducts = {
+            'شمزان': allProducts.filter(p => p.category === 'شمزان'),
+            'فلائن': allProducts.filter(p => p.category === 'فلائن'),
+            'بناطيل': allProducts.filter(p => p.category === 'بناطيل'),
+            'أثواب': allProducts.filter(p => p.category === 'أثواب'),
+            'ملابس داخلية': allProducts.filter(p => p.category === 'ملابس داخلية')
+        };
+
+        // عرض المنتجات عند تحميل الصفحة
+        $(document).ready(function() {
+            renderCategorySliders(categorizedProducts);
+            initSliders();
+            
+            // إضافة أحداث التغيير للفلاتر
+            $('#ageFilter, #colorFilter, #styleFilter, #categoryFilter').change(searchProducts);
+            
+            // ضبط عرض العناصر لملء الشاشة بالكامل
+            adjustLayout();
+            $(window).resize(adjustLayout);
+        });
+
+        // ضبط التخطيط لملء الشاشة
+        function adjustLayout() {
+            $('header, nav, .search-container, .filter-container').css('width', '100%');
+            $('.category-section').css('max-width', '100%');
+        }
+
+        // دالة لعرض السلايدرات لكل فئة
+        function renderCategorySliders(productsByCategory) {
+            let html = '';
+            
+            for (const [category, products] of Object.entries(productsByCategory)) {
+                if (products.length === 0) continue;
+                
+                html += `
+                <div class="category-section">
+                    <div class="section-header">
+                        <h2>${category}</h2>
+                        <a href="جميع-الملابس.html">عرض الكل</a>
+                    </div>
+                    <div class="product-slider">
+                        ${products.map(product => `
+                        <div class="product-card" data-id="${product.id}">
+                            ${product.onSale ? '<span class="sale-badge">تخفيض</span>' : ''}
+                            <img src="${product.img}" alt="${product.name}">
+                            <h3>${product.name}</h3>
+                            ${product.discountPrice ? `
+                                <div class="discount-price">${product.price}</div>
+                                <div class="sale-price">${product.discountPrice}</div>
+                            ` : `<div class="price">${product.price}</div>`}
+                            <div class="product-details">
+                                ${product.age} سنة | ${product.color} | ${product.style}
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                </div>
+                `;
+            }
+            
+            $('#productsDisplay').html(html);
+            
+            // إضافة أحداث النقر على المنتجات
+            $('.product-card').click(function() {
+                const productId = $(this).data('id');
+                const product = allProducts.find(p => p.id === productId);
+                if (product && product.url) {
+                    window.location.href = product.url;
+                }
+            });
+        }
+
+        // دالة تهيئة السلايدرات
+        function initSliders() {
+            $('.product-slider').slick({
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                rtl: true,
+                arrows: true,
+                infinite: true,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: { slidesToShow: 4 }
+                    },
+                    {
+                        breakpoint: 992,
+                        settings: { slidesToShow: 3 }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: { slidesToShow: 2 }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: { slidesToShow: 1 }
+                    }
+                ]
+            });
+        }
+
+        // دالة البحث والتصفية
+        function searchProducts() {
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            const ageFilter = $('#ageFilter').val();
+            const colorFilter = $('#colorFilter').val();
+            const styleFilter = $('#styleFilter').val();
+            const categoryFilter = $('#categoryFilter').val();
+            
+            // تصفية المنتجات
+            let filtered = allProducts.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                const matchesAge = !ageFilter || 
+                                 (ageFilter === '40up' ? product.age >= 40 : product.age == ageFilter);
+                const matchesColor = !colorFilter || product.color === colorFilter;
+                const matchesStyle = !styleFilter || product.style === styleFilter;
+                const matchesCategory = !categoryFilter || product.category === categoryFilter;
+                
+                return matchesSearch && matchesAge && matchesColor && matchesStyle && matchesCategory;
+            });
+            
+            // تصنيف المنتجات المصفاة
+            const filteredCategories = {};
+            filtered.forEach(product => {
+                if (!filteredCategories[product.category]) {
+                    filteredCategories[product.category] = [];
+                }
+                filteredCategories[product.category].push(product);
+            });
+            
+            // إعادة تهيئة السلايدرات مع النتائج المصفاة
+            $('.product-slider').slick('unslick');
+            $('#productsDisplay').empty();
+            
+            if (Object.keys(filteredCategories).length === 0) {
+                $('#productsDisplay').html('<div class="no-results">لا توجد منتجات مطابقة لبحثك</div>');
+            } else {
+                renderCategorySliders(filteredCategories);
+                initSliders();
+            }
+            
+            // تحديث الفلاتر النشطة
+            updateActiveFilters();
+        }
+
+        // دالة تحديث الفلاتر النشطة
+        function updateActiveFilters() {
+            $('select').removeClass('filter-active');
+            if ($('#ageFilter').val()) $('#ageFilter').addClass('filter-active');
+            if ($('#colorFilter').val()) $('#colorFilter').addClass('filter-active');
+            if ($('#styleFilter').val()) $('#styleFilter').addClass('filter-active');
+            if ($('#categoryFilter').val()) $('#categoryFilter').addClass('filter-active');
+        }
+
+        // دالة إعادة تعيين الفلاتر
+        function resetFilters() {
+            $('#searchInput').val('');
+            $('select').val('').removeClass('filter-active');
+            
+            // إعادة تحميل جميع المنتجات
+            $('.product-slider').slick('unslick');
+            $('#productsDisplay').empty();
+            renderCategorySliders(categorizedProducts);
+            initSliders();
+        }
+    </script>
+</body>
+</html>

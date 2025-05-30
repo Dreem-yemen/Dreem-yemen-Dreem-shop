@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>DREEM | تفاصيل المنتج</title>
+    <style>
+        html {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #000;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            background-image: url('http://localhost:8000/i.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.7;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .brand-logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .brand-slogan {
+            font-style: italic;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #111;
+            padding: 15px 10px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 8px;
+            font-size: 12px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        nav a:hover {
+            color: #ccc;
+        }
+
+        /* أنماط صفحة المنتج */
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .product-detail {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .product-images {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnails-container {
+            position: relative;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .thumbnails img {
+            width: 80px;
+            height: 100px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .thumbnails img:hover,
+        .thumbnails img.active {
+            border: 2px solid #000;
+        }
+
+        .thumbnail-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .thumbnail-nav.prev {
+            right: 0;
+        }
+
+        .thumbnail-nav.next {
+            left: 0;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .product-title {
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+            color: #000;
+        }
+
+        .price-container {
+            margin: 20px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #000;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .discount-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .sale-badge {
+            background-color: #000;
+            color: white;
+            padding: 3px 8px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .product-details {
+            margin: 20px 0;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            min-width: 100px;
+            color: #555;
+        }
+
+        .detail-value {
+            flex: 1;
+        }
+
+        .product-description {
+            margin: 20px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .contact-btn {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        .contact-btn:hover {
+            background-color: #333;
+        }
+
+        .slide-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            pointer-events: auto;
+            transition: background 0.3s;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                flex-direction: column;
+            }
+            
+            .product-images, .product-info {
+                width: 100%;
+            }
+            
+            .brand-logo {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="brand-logo">DREEM</h1>
+            <p class="brand-slogan">للخياطة والملابس الجاهزة الفاخرة</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="men.html">رجالي</a>
+        <a href="women.html">نسائي</a>
+        <a href="kids.html">أطفال</a>
+        <a href="contact.html">اتصل بنا</a>
+    </nav>
+
+    <div class="product-detail-container">
+        <div class="product-detail">
+            <div class="product-images">
+                <div class="main-image">
+                    <img id="mainProductImage" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="صورة المنتج">
+                    <div class="slide-buttons">
+                        <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+                        <button class="next" onclick="changeImage(1)">&#10095;</button>
+                    </div>
+                </div>
+
+                <div class="thumbnails-container">
+                    <button class="thumbnail-nav prev" onclick="scrollThumbnails(-1)">&#10094;</button>
+                    <div class="thumbnails" id="thumbnails">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 0)" class="active">
+                        <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 1)">
+                        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 2)">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 3)">
+                        <img src="https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 4)">
+                        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" onclick="changeMainImage(this, 5)">
+                    </div>
+                    <button class="thumbnail-nav next" onclick="scrollThumbnails(1)">&#10095;</button>
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1 class="product-title">تيشرت رجالي قطني</h1>
+                
+                <div class="price-container" id="priceContainer">
+                    <!-- سيتم ملؤه بواسطة JavaScript -->
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-item">
+                        <span class="detail-label">العمر:</span>
+                        <span class="detail-value">22 سنة</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">اللون:</span>
+                        <span class="detail-value">أسود</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">الشكل:</span>
+                        <span class="detail-value">قصير</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">النمط:</span>
+                        <span class="detail-value">صيفي</span>
+                    </div>
+                </div>
+                
+                <div class="product-description">
+                    <p>تيشرت صيفي مصنوع من القطن بنسبة 100%، مثالي للارتداء اليومي. يتميز بجودة الخامة وسهولة العناية به. مناسب لجميع المناسبات اليومية والعادية.</p>
+                </div>
+                
+                <button class="contact-btn" onclick="contactAboutProduct('تيشرت رجالي قطني', window.location.href)">طلب المنتج</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>تابعنا على:</p>
+        <a href="https://whatsapp.com/channel/0029VbB34whJUM2bLJQ3fp1K" title="واتساب">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="30">
+        </a>
+        <a href="https://www.facebook.com/dreem.fashion" title="فيسبوك">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="فيسبوك" width="30">
+        </a>
+        <a href="https://t.me/+967771075146" title="تلجرام">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="تلجرام" width="30">
+        </a>
+    </footer>
+
+    <script>
+        // تحكم في ظهور التخفيض - غير هذه القيمة حسب الحاجة
+        const showDiscount = false; // true لإظهار التخفيض، false لإخفائه
+
+        // صور المنتج الوهمية
+        const productImages = [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+        ];
+        
+        let currentImageIndex = 0;
+
+        // دالة لتحديث عرض السعر بناءً على قيمة showDiscount
+        function updatePriceDisplay() {
+            const priceContainer = document.getElementById('priceContainer');
+            
+            if (showDiscount) {
+                priceContainer.innerHTML = `
+                    <span class="sale-badge">تخفيض</span>
+                    <span class="discount-price">75 ر.س</span>
+                    <span class="price">60 ر.س</span>
+                `;
+            } else {
+                priceContainer.innerHTML = `
+                    <span class="price">60 ر.س</span>
+                `;
+            }
+        }
+
+        // تغيير الصورة الرئيسية عند النقر على الصورة المصغرة
+        function changeMainImage(thumbnail, index) {
+            document.getElementById("mainProductImage").src = thumbnail.src;
+            currentImageIndex = index;
+            
+            // تحديث الصور المصغرة النشطة
+            document.querySelectorAll(".thumbnails img").forEach(img => img.classList.remove("active"));
+            thumbnail.classList.add("active");
+        }
+
+        // تغيير الصورة الرئيسية باستخدام أزرار السهم
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = productImages.length - 1;
+            } else if (currentImageIndex >= productImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            document.getElementById("mainProductImage").src = productImages[currentImageIndex];
+            
+            // تحديث الصور المصغرة النشطة
+            document.querySelectorAll(".thumbnails img").forEach(img => img.classList.remove("active"));
+            document.querySelectorAll(".thumbnails img")[currentImageIndex].classList.add("active");
+            
+            // التمرير التلقائي للصور المصغرة لضمان ظهور الصورة النشطة
+            scrollToThumbnail(currentImageIndex);
+        }
+
+        // التمرير الأفقي للصور المصغرة
+        function scrollThumbnails(direction) {
+            const thumbnails = document.getElementById("thumbnails");
+            const scrollAmount = 150; // كمية التمرير
+            thumbnails.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // التمرير إلى صورة مصغرة محددة
+        function scrollToThumbnail(index) {
+            const thumbnails = document.getElementById("thumbnails");
+            const thumbnail = document.querySelectorAll(".thumbnails img")[index];
+            if (thumbnail) {
+                thumbnails.scrollTo({
+                    left: thumbnail.offsetLeft - (thumbnails.offsetWidth / 2) + (thumbnail.offsetWidth / 2),
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // التواصل حول المنتج
+        function contactAboutProduct(productName, productLink) {
+            if (productLink && (productLink.startsWith("http://") || productLink.startsWith("https://"))) {
+                const message = `مرحباً، أنا مهتم بالمنتج: ${productName}\n\nرابط المنتج:\n${productLink}`;
+                const whatsappUrl = `https://wa.me/967771075146?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                alert("الرابط غير صالح.");
+            }
+        }
+
+        // تأثير تكبير/تصغير الصورة الرئيسية عند التمرير
+        document.getElementById("mainProductImage").addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const scale = e.deltaY > 0 ? 0.9 : 1.1;
+            this.style.transform = `scale(${scale})`;
+        });
+
+        // تحديث عرض السعر عند تحميل الصفحة
+        window.onload = function() {
+            updatePriceDisplay();
+        };
+    </script>
+</body>
+</html>

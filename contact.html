@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>DREEM | Fashion</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        html {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            background-image: url('http://localhost:8000/IMG_20250529_094243.gif');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.7;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .brand-logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .brand-slogan {
+            font-style: italic;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #111;
+            padding: 15px 10px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 8px;
+            font-size: 12px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        nav a:hover {
+            color: #ccc;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            font-family: Arial;
+            font-size: 14px;
+        }
+        
+        .contact-form textarea {
+            resize: vertical;
+        }
+        
+        .contact-form button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .contact-form button:hover {
+            background-color: #333;
+        }
+        
+        .success-message,
+        .error-message,
+        .loading {
+            display: none;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        
+        .error-message {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        
+        .loading {
+            background-color: #d9edf7;
+            color: #31708f;
+        }
+        
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        footer a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+        
+        footer img {
+            width: 30px;
+            height: 30px;
+            filter: invert(1);
+        }
+        
+        @media (min-width: 768px) {
+            .brand-logo {
+                font-size: 3rem;
+            }
+            
+            nav a {
+                margin: 0 15px;
+                font-size: 14px;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="brand-logo">اتصل بنا</h1>
+            <p class="brand-slogan">لا تتردد في ارسال اي رساله</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="men.html">رجالي</a>
+        <a href="women.html">نسائي</a>
+        <a href="kids.html">أطفال</a>
+        <a href="contact.html">اتصل بنا</a>
+    </nav>
+
+    <div class="contact-form">
+        <h2>ارسل رسالتك هنا</h2>
+        
+        <div class="success-message" id="success-message">تم إرسال رسالتك بنجاح!</div>
+        <div class="error-message" id="error-message">فشل في إرسال الرسالة. حاول لاحقاً.</div>
+        <div class="loading" id="loading">جاري الإرسال...</div>
+
+        <form id="contact-form">
+            <input type="text" name="from_name" placeholder="الاسم الكامل" required>
+            <input type="email" name="from_email" placeholder="البريد الإلكتروني" required>
+            <input type="text" name="subject" placeholder="عنوان الرسالة" required>
+            <textarea name="message" placeholder="اكتب رسالتك هنا..." rows="5" required></textarea>
+            <button type="submit" id="submit-btn">إرسال</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>تابعنا على:</p>
+        <a href="https://whatsapp.com/channel/0029VbB34whJUM2bLJQ3fp1K" title="واتساب">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب">
+        </a>
+        <a href="https://www.facebook.com/dreem.fashion" title="فيسبوك">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="فيسبوك">
+        </a>
+        <a href="https://t.me/+967771075146" title="تلجرام">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="تلجرام">
+        </a>
+    </footer>
+
+    <script>
+        emailjs.init("pZrvUZJEgMslB9UV_"); // مفتاحك العام
+
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("submit-btn").disabled = true;
+            document.getElementById("success-message").style.display = "none";
+            document.getElementById("error-message").style.display = "none";
+
+            emailjs.sendForm("service_ddxezet", "template_ieegcvs", this)
+                .then(function(response) {
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("success-message").style.display = "block";
+                    document.getElementById("contact-form").reset();
+                    document.getElementById("submit-btn").disabled = false;
+                }, function(error) {
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("error-message").style.display = "block";
+                    document.getElementById("submit-btn").disabled = false;
+                    console.error("EmailJS Error:", error);
+                });
+        });
+    </script>
+</body>
+</html>

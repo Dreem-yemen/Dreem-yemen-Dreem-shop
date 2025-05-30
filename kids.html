@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>DREEM | Fashion</title>
+    <style>
+        html {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-bg {
+            background-image: url('http://localhost:8000/istockphoto-2096480418-612x612.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.7;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        .brand-logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .brand-slogan {
+            font-style: italic;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #111;
+            padding: 15px 10px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 8px;
+            font-size: 12px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        nav a:hover {
+            color: #ccc;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            background-color: #f1f1f1;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 70%;
+            margin-right: 8px;
+            border-radius: 0;
+            border: 1px solid #ddd;
+            font-family: Arial;
+            font-size: 14px;
+        }
+        .search-container button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        .search-container button:hover {
+            background-color: #333;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            flex-wrap: wrap;
+        }
+        .filter-container select {
+            padding: 8px;
+            margin: 4px;
+            border-radius: 0;
+            border: 1px solid #ddd;
+            min-width: 100px;
+            background-color: white;
+            font-family: Arial;
+            font-size: 12px;
+        }
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 12px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .product-card {
+            background-color: white;
+            border: 1px solid #eee;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .product-card:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            transition: opacity 0.3s;
+        }
+        .product-card:hover img {
+            opacity: 0.8;
+        }
+        .product-card h3 {
+            margin: 8px 0;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        .price {
+            font-weight: bold;
+            color: #000;
+            font-size: 1em;
+            margin: 8px 0;
+        }
+        .discount-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-top: 3px;
+            text-decoration: line-through;
+        }
+        .sale-price {
+            color: #000;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        .sale-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: #000;
+            color: white;
+            padding: 2px 6px;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+        .sale-indicator {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .brand-logo {
+                font-size: 3rem;
+            }
+            nav a {
+                margin: 0 15px;
+                font-size: 14px;
+            }
+            .search-container input {
+                width: 300px;
+                font-size: 16px;
+            }
+            .search-container button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+            .filter-container select {
+                min-width: 120px;
+                font-size: 14px;
+            }
+            .product-container {
+                gap: 20px;
+                padding: 20px;
+                max-width: 1200px;
+            }
+            .product-card {
+                padding: 15px;
+            }
+            .product-card h3 {
+                font-size: 16px;
+            }
+            .price, .sale-price {
+                font-size: 1.2em;
+            }
+            .discount-price {
+                font-size: 1.1em;
+            }
+            .sale-badge {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="brand-logo">قسم الاطفال</h1>
+            <p class="brand-slogan">اختر احد الفئات الموجوده</p>
+        </div>
+    </header>
+
+ <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="men.html">رجالي</a>
+    <a href="women.html">نسائي</a>
+    <a href="kids.html">أطفال</a>
+    <a href="contact.html">اتصل بنا</a>
+  </nav>
+
+  <div class="product-container">
+    <!-- خيار الأولاد -->
+    <div class="product-card" onclick="window.location.href='اولاد.html'">
+      <img src="http://localhost:8000/%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A5%D9%A2%D9%A9_%D9%A1%D9%A1%D9%A0%D9%A1%D9%A5%D9%A0.png" alt="ملابس الاولاد" />
+      <h3>ملابس الاولاد</h3>
+    </div>
+
+    <!-- خيار البنات -->
+    <div class="product-card" onclick="window.location.href='بنات.html'">
+      <img src="http://localhost:8000/%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A5%D9%A2%D9%A9_%D9%A1%D9%A1%D9%A0%D9%A2%D9%A1%D9%A5.png" alt="ملابس البنات " />
+      <h3>ملابس البنات</h3>
+    </div>
+  </div>
+
+</body>
+</html>
